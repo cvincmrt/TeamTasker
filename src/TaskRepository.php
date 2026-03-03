@@ -22,13 +22,25 @@ class TaskRepository
         $stmt = $this->db->query($sql);
 
         while($row = $stmt->fetchAll(PDO::FETCH_ASSOC)){
-            $tasks = null;
+            $task = null;
 
             if($row["type"] === "DevTask"){
-                $task = new DevTask();
+                $task = new DevTask($row["title"], $row["description"], (int)$row["priority"], (int)$row["status"], $row["meta_link"]);
+            } elseif ($row["type"] === "DesignTask"){
+                $task = new DesignTask($row["title"], $row["description"], (int)$row["priority"], (int)$row["status"], $row["meta_link"]);
             }
-
+            
+            if($task){
+                $task->setId((int)$row["id"]);
+                $tasks[] = $task;
+            }
         }
+        return $tasks;
 
+    }
+
+    public function delete($id){
+        $stmt = $this->db->prepare("DELETE FROM tasks WHERE id = :id");
+        return $stmt->execute([":id" => $id]);
     }
 }
