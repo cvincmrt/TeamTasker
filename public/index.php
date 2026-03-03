@@ -1,11 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    ahoj
-</body>
-</html>
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';; 
+
+use App\Database;
+use App\TaskRepository;
+use App\Task;
+use App\DesignTask;
+use App\DevTask;
+
+$pdo = new Database();
+$connect = $pdo->getConnection();
+
+$repo = new TaskRepository($connect);
+
+$tasks = $repo->getAll();
+
+include __DIR__ . '/../views/dashboard.php';
+

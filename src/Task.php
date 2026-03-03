@@ -26,5 +26,19 @@ abstract class Task
         return $this->id;
     }
 
+    public function getTitle(){
+        return $this->title;
+    }
+
+    public function getDescription(){
+        return $this->description;
+    }
+    public function getPriority(){
+        return $this->priority;
+    }
+    public function getStatus(){
+        return $this->status;
+    }
+
     abstract public function getWorkLink();
 }

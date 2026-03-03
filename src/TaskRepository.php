@@ -21,9 +21,9 @@ class TaskRepository
         $sql = "SELECT * FROM tasks ORDER BY priority DESC";
         $stmt = $this->db->query($sql);
 
-        while($row = $stmt->fetchAll(PDO::FETCH_ASSOC)){
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $task = null;
-
+            
             if($row["type"] === "DevTask"){
                 $task = new DevTask($row["title"], $row["description"], (int)$row["priority"], (int)$row["status"], $row["meta_link"]);
             } elseif ($row["type"] === "DesignTask"){
